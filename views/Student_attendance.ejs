@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Attendance for <%= subject.subjectName %></h1>
+            <h3>Student: <%= student.firstname + " " + student.lastname %></h3>
+            <p><strong>Roll Number:</strong> <%= student.rollNumber %></p>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h4>Attendance Records</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Present Days:</strong> <%= subject.attendanceRecords[0].presentDays %></p>
+                <p><strong>Total Days:</strong> <%= subject.attendanceRecords[0].totalDays %></p>
+                <p><strong>Attendance Percentage:</strong> 
+                    <% 
+                    let percentage = 0;
+                    if (subject.attendanceRecords[0].totalDays > 0) {
+                        percentage = (subject.attendanceRecords[0].presentDays / subject.attendanceRecords[0].totalDays) * 100;
+                    } else {
+                        percentage = 0; // or any default value or message like "N/A"
+                    }
+                    %>
+                    <%= percentage.toFixed(2) %>%>
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="/Student_dashboard" class="btn btn-primary">Back to Dashboard</a>
+            <a href="/logout" class="btn btn-danger">Log Out</a>
+        </div>
+    </div>
+    <%- include('partials/footer') %>

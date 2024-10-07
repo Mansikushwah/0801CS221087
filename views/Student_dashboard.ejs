@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+    <div class="jumbotron centered">
+        
+        <div class="container">
+            <h2>Welcome, <%= student.firstname + " " + student.lastname %></h2>
+            <nav>
+                <form action="/Student_attendance" method="GET">
+                    <div class="form-group">
+                        <label for="subjectSelect">Choose a subject to view attendance:</label>
+                        <select class="form-control" id="subjectSelect" name="subjectName" required>
+                            <% student.subjects.forEach(subject => { %>
+                                <option value="<%= subject.subjectName %>"><%= subject.subjectName %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">View Attendance</button>
+                </form>
+                <br>
+                <div class="btn-container">
+                    <a class="btn btn-danger" href="/logout">Log Out</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <%- include('partials/footer') %>

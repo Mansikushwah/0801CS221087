@@ -1,0 +1,84 @@
+<%- include('partials/header') %>
+    <div class="container mt-5">
+        <div class="btn-container">
+            <a class="btn btn-secondary" href="/Faculty_dashboard">Go to Dashboard</a>
+            <a class="btn btn-danger" href="/logout">Log Out</a>
+        </div>
+        
+        <% if (subjectRecords && subjectRecords.length > 0) { %>
+            <h2 class="text-center">Students List</h2>
+            <form action="/Students_list" method="POST">
+                <div class="form-group">
+                    <label for="attendanceDate">Date:</label>
+                    <input type="date" id="attendanceDate" name="attendanceDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <select id="subject" name="subject" class="form-control" required>
+                        <option value="" disabled selected>Select Subject</option>
+                        <option value="Maths">Maths</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Physics">Physics</option>
+                    </select>
+                </div>
+                <table class="table table-striped mt-4">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Roll Number</th>
+                            <th>Name</th>
+                            <th>Present Days</th>
+                            <th>Total Days</th>
+                            <th>Percentage</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% subjectRecords.forEach(function(stu) { %>
+                            <tr>
+                                <td><%= stu.student.rollNumber %></td>
+                                <td><%= stu.student.firstname %> <%= stu.student.lastname %></td>
+                                <td><%= stu.subjectRecord.attendanceRecords[0].presentDays%></td>
+                                <td><%= stu.subjectRecord.attendanceRecords[0].totalDays%></td>
+                                <td><% 
+                                    var totalDays = stu.subjectRecord.attendanceRecords[0].totalDays;
+                                    var presentDays = stu.subjectRecord.attendanceRecords[0].presentDays;
+                                    var percentage = 0;
+                                    if (totalDays > 0) {
+                                        percentage = (presentDays / totalDays) * 100;
+                                    }
+                                    %>
+                                    <%= percentage.toFixed(2) %>%</td>
+                                <td>
+                                    <button type="button" class="attendance-btn grey" onclick="toggleAttendance(this)">Present</button>
+                                    <input type="hidden" name="attendanceStatus[]" value="grey">
+                                    <input type="hidden" name="rollNumbers[]" value="<%= stu.student.rollNumber %>">
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary btn-block">Submit Attendance</button>
+            </form>
+        <% } else if (students && students.length === 0) { %>
+            <p class="text-center mt-4">No students found for the selected criteria.</p>
+        <% } %>
+    </div>
+
+    <script>
+        function toggleAttendance(button) {
+            if (button.classList.contains('grey')) {
+                button.classList.remove('grey');
+                button.classList.add('present');
+                button.nextElementSibling.value = "green";
+            } else if (button.classList.contains('present')) {
+                button.classList.remove('present');
+                button.classList.add('absent');
+                button.nextElementSibling.value = "red";
+            } else if (button.classList.contains('absent')) {
+                button.classList.remove('absent');
+                button.classList.add('grey');
+                button.nextElementSibling.value = "grey";
+            }
+        }
+    </script>
+ <%- include('partials/footer') %>

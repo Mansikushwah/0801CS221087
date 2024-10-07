@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+    <div class="container mt-5">
+        <h1 class="mb-4">Add Students via Excel Sheet</h1>
+        <div class="row">
+            <div class="col-sm-8 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Form to upload Excel file -->
+                        <form action="/upload-excel" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="excelFile">Upload Excel File:</label>
+                                <input type="file" id="excelFile" name="excelFile" accept=".xls,.xlsx" required class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload and Add Students</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>

@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+    <div class="jumbotron centered">
+    <div class="dashboard-container">
+        <h2>Welcome, <%= faculty.firstname + " " + faculty.lastname %></h2>
+        <nav>
+            <a class="btn btn-light btn-lg" href="/Mark_attendance" role="button">Mark Attendance</a>
+            <a class="btn btn-light btn-lg" href="/logout" role="button">Log Out</a>
+        </nav>
+    </div>
+</div>
+<%- include('partials/footer') %>
